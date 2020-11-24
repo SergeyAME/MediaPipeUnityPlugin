@@ -18,7 +18,7 @@ public class SceneDirector : MonoBehaviour {
   GpuResources gpuResources;
   GlCalculatorHelper gpuHelper;
 
-  const int MAX_WAIT_FRAME = 50;
+  const int MAX_WAIT_FRAME = 200;
 
   bool IsAssetLoaded = false;
   bool IsAssetLoadFailed = false;

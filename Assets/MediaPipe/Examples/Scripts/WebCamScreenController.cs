@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class WebCamScreenController : MonoBehaviour {
@@ -10,14 +11,16 @@ public class WebCamScreenController : MonoBehaviour {
   private WebCamTexture webCamTexture;
   private Texture2D outputTexture;
   private Color32[] pixelData;
+  
+  const int WIDTH_TEXTURE_THRESHOLD = 100;
 
   public void ResetScreen(WebCamDevice? device) {
     if (webCamTexture != null && webCamTexture.isPlaying) {
       webCamTexture.Stop();
       webCamTexture = null;
     }
-
-    if (device == null) return;
+    if (device == null) 
+      return;
 
     webCamTexture = new WebCamTexture(device?.name, DefaultHeight, DefaultWidth, FPS);
 
@@ -29,14 +32,16 @@ public class WebCamScreenController : MonoBehaviour {
     }
 
     Renderer renderer = GetComponent<Renderer>();
-    outputTexture = new Texture2D(webCamTexture.width, webCamTexture.height);
+    outputTexture = new Texture2D(DefaultWidth, DefaultHeight);
     renderer.material.mainTexture = outputTexture;
 
-    pixelData = new Color32[webCamTexture.width * webCamTexture.height];
+    pixelData = new Color32[DefaultWidth * DefaultHeight];
   }
 
-  public bool IsPlaying() {
-    return webCamTexture == null ? false : webCamTexture.isPlaying;
+  public bool IsPlaying()
+  {
+    //we must check, that texture have correct size.
+    return webCamTexture != null && webCamTexture.isPlaying && webCamTexture.width > WIDTH_TEXTURE_THRESHOLD;
   }
 
   public int Height() {
