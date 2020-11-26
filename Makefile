@@ -10,6 +10,7 @@ scriptdir := $(sdkdir)/Scripts
 bazelflags.gpu := --copt -DMESA_EGL_NO_X11_HEADERS --copt -DEGL_NO_X11
 bazelflags.cpu := --define MEDIAPIPE_DISABLE_GPU=1
 bazelflags.android_arm := --config=android_arm
+bazelflags.ios := --config=ios_arm64
 baseltarget.model = //mediapipe_api:mediapipe_models
 
 proto_srcdir := $(scriptdir)/Protobuf
@@ -42,6 +43,9 @@ mac_cpu: | $(protobuf_dll)
 
 android_arm: | $(protobuf_dll)
 	cd C && bazel build -c opt ${bazelflags.android_arm} //mediapipe_api/java/org/homuler/mediapipe/unity:mediapipe_android $(bazel_common_target)
+
+ios: | $(protobuf_dll)
+	cd C && bazel build -c opt ${bazelflags.ios} //mediapipe_api:IosMediaPipeLibrary $(bazel_common_target)
 
 $(plugindir)/Google.Protobuf.dll: Temp/$(protobuf_tarball)
 	cd Temp/protobuf-$(protobuf_version)/csharp && ./buildall.sh && mv src/Google.Protobuf/bin/Release/net45/* ../../../$(plugindir)
