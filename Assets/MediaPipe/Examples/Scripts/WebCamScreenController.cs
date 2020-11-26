@@ -22,7 +22,7 @@ public class WebCamScreenController : MonoBehaviour {
     if (device == null) 
       return;
 
-    webCamTexture = new WebCamTexture(device?.name, DefaultHeight, DefaultWidth, FPS);
+    webCamTexture = new WebCamTexture(device?.name, DefaultWidth, DefaultHeight, FPS);
 
     try {
       webCamTexture.Play();
