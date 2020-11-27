@@ -47,6 +47,9 @@ android_arm: | $(protobuf_dll)
 ios: | $(protobuf_dll)
 	cd C && bazel build -c opt ${bazelflags.ios} //mediapipe_api:IosMediaPipeLibrary $(bazel_common_target)
 
+ios_cpu: | $(protobuf_dll)
+	cd C && bazel build -c opt ${bazelflags.ios} ${bazelflags.cpu} //mediapipe_api:IosMediaPipeLibrary $(bazel_common_target)
+
 $(plugindir)/Google.Protobuf.dll: Temp/$(protobuf_tarball)
 	cd Temp/protobuf-$(protobuf_version)/csharp && ./buildall.sh && mv src/Google.Protobuf/bin/Release/net45/* ../../../$(plugindir)
 

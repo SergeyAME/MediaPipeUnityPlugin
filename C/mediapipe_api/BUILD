@@ -2,7 +2,8 @@ load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("//mediapipe_api:import_model.bzl", "pkg_model")
 
 load(
-    "@build_bazel_rules_apple//apple:ios.bzl",    
+    "@build_bazel_rules_apple//apple:ios.bzl",
+    "ios_application"    
 )
 
 cc_library(
@@ -58,8 +59,7 @@ objc_library(
     name = "IosMediaPipeLibrary",
     deps = [
         ":mediapipe_c",
-        "@com_google_mediapipe//mediapipe/objc:mediapipe_framework_ios",
-        "@com_google_mediapipe//mediapipe/objc:mediapipe_input_sources_ios",],    
+    ],    
 )
 
 # It is recommended that you include only neccessary calculators.
